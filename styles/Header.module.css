@@ -1,0 +1,87 @@
+.Header {
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    background:linear-gradient(to right, rgb(134, 19, 235), rgb(92, 92, 152), rgb(103, 48, 158));
+    padding: 40px 30px;
+    height: 270px;
+}
+
+.headerContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.TopLine {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Heading {
+    color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: larger;
+}
+
+.newNoteBtn {
+    height: 50px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(134, 121, 185);
+    border: rgb(163, 162, 162) 1px solid;
+    color: white;
+    font-weight: bolder;
+    font-size: medium;
+}
+
+.rightContainer {
+    margin-left: 20px;
+}
+
+.dropDownMenu {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  right: 50px;
+  top: 50px;
+  /* margin-right: 20px; */
+  /* margin-top: 20px; */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 20px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+
+.dropdownContent p {
+  padding: 10px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.dropdownContent p:hover {
+  background-color: #f1f1f1;
+  position: absolute;
+  right:50px;
+}
+
+.dropDownMenu img {
+    height: 60px;
+    width: 70px;
+    border-radius: 250%;
+}
+.show {
+  display: block;
+}
+
+
+.secondLine {
+    margin-top: 50px;
+    display: flex;
+    gap: 20px;
+}

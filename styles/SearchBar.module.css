@@ -1,0 +1,15 @@
+
+.inputBox {
+    height: 50px;
+    width: 900px;
+    background-color: white;
+    padding: 20px 50px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+}
+
+.inputBox::placeholder {
+    font-size: 15;
+    color: rgb(150, 144, 136);
+}

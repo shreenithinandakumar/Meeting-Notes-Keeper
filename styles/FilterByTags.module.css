@@ -1,0 +1,23 @@
+.FilterByTagsContainer {
+    height: 100px;
+    width: 260px;
+    /* background-color: rgb(138, 111, 246); */
+    background-color: rgb(134, 121, 185);
+    font-weight: bolder;
+    color: white;
+    border: 1px solid rgb(184, 182, 182);
+    border-radius: 15px;
+    padding: 15px 20px;
+}
+
+.TagBox {
+    height: 30px;
+    width: 60px;
+    border: 1px solid rgb(163, 160, 160);
+    padding: 5px 10px;
+    margin: 20px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+/* rgb(134, 121, 185) */

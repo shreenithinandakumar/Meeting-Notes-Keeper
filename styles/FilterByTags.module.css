@@ -1,6 +1,13 @@
+.TagsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
 .FilterByTagsContainer {
+    flex-shrink: 0;
     height: 100px;
-    width: 260px;
+    /*width: 260px; */
     /* background-color: rgb(138, 111, 246); */
     background-color: rgb(134, 121, 185);
     font-weight: bolder;
@@ -8,16 +15,30 @@
     border: 1px solid rgb(184, 182, 182);
     border-radius: 15px;
     padding: 15px 20px;
+    /* box-sizing: border-box;
+    width: auto; */
+    min-width: 300px;  
 }
 
 .TagBox {
-    height: 30px;
-    width: 60px;
+    /* height: 30px;
+    width: 60px; */
+    cursor: pointer;
     border: 1px solid rgb(163, 160, 160);
     padding: 5px 10px;
-    margin: 20px;
-    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 0px;
     border-radius: 5px;
+    transition: 0.2s ease;
 }
 
+.TagBox:hover {
+  background-color: #8b7bef;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #0070f3;
+  color: white;
+}
 /* rgb(134, 121, 185) */

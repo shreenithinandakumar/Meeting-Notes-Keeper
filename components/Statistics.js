@@ -6,6 +6,10 @@ const Statistics = () => {
     const allTags = NotesData.flatMap(note => note.tags || []);
     const uniqueTags = new Set(allTags);
     const numberOfUniqueTags = uniqueTags.size;
+    const totalPending = NotesData.reduce((count, note) => {
+        const pendingInNote = note.actionItems.filter(item => !item.done).length;
+        return count + pendingInNote;
+    }, 0)
 
     return (
         <div className={styles.StatisticsContainer}>
@@ -13,7 +17,7 @@ const Statistics = () => {
             <div className={styles.StatisticsContent}>
                 <StatsBox StatsCount={NotesData.length} StatsType="Total Notes"></StatsBox>
                 <StatsBox StatsCount={numberOfUniqueTags} StatsType="Unique Tags"></StatsBox>
-                <StatsBox StatsType="Pending Tasks"></StatsBox>
+                <StatsBox StatsCount= {totalPending} StatsType="Pending Tasks"></StatsBox>
             </div>
             <div></div>
         </div>

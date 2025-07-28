@@ -1,17 +1,15 @@
 'use client'
 
 import styles from '@/styles/Header.module.css'
-import globe from '@/public/globe.svg'
 import ProfileDropDown from './ProfileDropDown';
 import FilterByTags from './FilterByTags';
 import { useState } from 'react';
 import SearchBar from './SearchBar';
 
 
-const Header = () => {
+const Header = ({ searchQuery, setSearchQuery, setActiveTag, activeTag }) => {
 
     const [showMenu, setShowMenu] = useState(false);
-
     const toggleMenu = () => setShowMenu(!showMenu);
 
 
@@ -29,8 +27,8 @@ const Header = () => {
                 </div>
 
                 <div className={styles.secondLine}>
-                    <SearchBar></SearchBar>
-                    <FilterByTags></FilterByTags>
+                    <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} disabled={!!activeTag} ></SearchBar>
+                    <FilterByTags setActiveTag={setActiveTag} activeTag={activeTag} ></FilterByTags>
                 </div>
             </div>
             <div> <ProfileDropDown> </ProfileDropDown></div>

@@ -1,0 +1,27 @@
+.NoNotesFounContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 60px;
+    gap: 30px;
+}
+
+.imageIcon {
+    height: 100px;
+    width: 200px;
+    object-fit:contain;
+}
+
+.heading {
+    font-size: 25;
+    font-weight: 500;
+    color: rgb(34, 34, 34);
+}
+
+.sentence {
+    color: gray;
+    max-width: 400px;
+    text-align: center;
+}

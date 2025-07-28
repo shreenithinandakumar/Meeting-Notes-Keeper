@@ -1,6 +1,15 @@
 import styles from '@/styles/Note.module.css'
+import { useState } from 'react';
 
 const Note = ({ title, date, time, tags, meetingNotes, actionItems }) => {
+    const [tasks, setTasks] = useState(actionItems);
+
+    const toggleTask = (index) => {
+        const updated = [...tasks];
+        updated[index].done = !updated[index].done;
+        setTasks(updated);
+    };
+    
     return (
         <div className={styles.NotesContainer}>
 
@@ -20,10 +29,14 @@ const Note = ({ title, date, time, tags, meetingNotes, actionItems }) => {
             <div className={styles.TodoContainer}>
                 <p className={styles.ActionItems}>Action Items ({actionItems.filter(item => !item.done).length} remaining) </p>
                 <div className={styles.TodoList}>
-                    {actionItems.map((item, idx) => (
-                        <div className={styles.Todo} key={idx}>
-                            <input type="checkbox" checked={item.done} readOnly />
-                            <span className={styles.TaskName}>{item}</span>
+                    {tasks.map((item, idx) => (
+                        <div key={idx} className={styles.TaskRow} onClick={() => toggleTask(idx)}>
+                            <span className={`${styles.Checkbox} ${item.done ? styles.Checked : ''}`}>
+                            {item.done ? '✔' : ''}
+                            </span>
+                            <span className={`${styles.TaskText} ${item.done ? styles.Striked : ''}`}>
+                            {item.task}
+                            </span>
                         </div>
                     ))}
                 </div>

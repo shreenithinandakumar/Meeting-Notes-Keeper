@@ -1,0 +1,39 @@
+.NotesEmptyContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-self: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 60px;
+}
+
+.imageIcon {
+    height: 100px;
+    width: 200px;
+    object-fit:contain;
+}
+
+.heading {
+    font-size: 25;
+    font-weight: 500;
+    color: rgb(34, 34, 34);
+}
+
+.sentence {
+    color: gray;
+    max-width: 550px;
+    text-align: center;
+}
+
+.createButton {
+    height: 70px;
+    width: 250px;
+    background-color: rgb(91, 4, 134);
+    font-size: medium;
+    font-weight: bolder;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+}

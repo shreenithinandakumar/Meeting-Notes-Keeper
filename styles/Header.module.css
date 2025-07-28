@@ -83,5 +83,6 @@
 .secondLine {
     margin-top: 50px;
     display: flex;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 12px;
 }

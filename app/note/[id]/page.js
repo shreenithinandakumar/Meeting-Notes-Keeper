@@ -1,0 +1,78 @@
+'use client'
+
+import styles from '@/styles/NoteDetails.module.css'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { use } from 'react'
+import NotesData from '@/data/NotesData'
+
+export default function NoteDetails(paramsPromise) {
+  const { id } = use(paramsPromise.params)
+  const router = useRouter()
+  const [note, setNote] = useState(null)
+  const [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    const found = NotesData.find(n => n.id.toString() === id)
+    if (found) {
+      setNote(found)
+      setTasks(found.actionItems || [])
+    }
+  }, [id])
+
+  const toggleTask = (index) => {
+    const updated = tasks.map((task, i) =>
+      i === index ? { ...task, done: !task.done } : task
+    )
+    setTasks(updated)
+  }
+
+  if (!note) return <div className={styles.loading}>Loading note...</div>
+
+  return (
+    <div className={styles.pageWrapper}>
+      <div className={styles.headerRow}>
+        <button className={styles.backButton} onClick={() => router.push('/dashboard')}>↩  Back to Notes</button>
+        <div className={styles.actionButtons}>
+          <button className={styles.editButton} onClick={() => router.push(`/note/${id}/edit`)}>📝 Edit</button>
+          <button className={styles.deleteButton} onClick={() => router.push(`/note/${id}/delete`)}>🗑 Delete</button>
+        </div>
+      </div>
+
+      <div className={styles.noteCard}>
+        <h1 className={styles.title}>{note.title}</h1>
+        <p className={styles.date}>📅 {note.date} {note.time}</p>
+
+        <div className={styles.section}>
+          <h3 className={styles.subheading}>🏷  Tags</h3>
+          <div className={styles.tagList}>
+            {note.tags?.map((tag, idx) => (
+              <span key={idx} className={styles.tag}>{tag}</span>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.section}>
+          <h3 className={styles.subheading}>📝 Meeting Notes</h3>
+          <p className={styles.notesText}>{note.meetingNotes}</p>
+        </div>
+
+        <div className={styles.section}>
+          <h3 className={styles.subheading}>🎯 Action Items ({tasks.filter(item => !item.done).length} remaining)</h3>
+          <div className={styles.todoList}>
+            {tasks.map((item, idx) => (
+              <div key={idx} className={styles.taskRow} onClick={() => toggleTask(idx)}>
+                <span className={`${styles.checkbox} ${item.done ? styles.checked : ''}`}>
+                  {item.done ? '✔' : ''}
+                </span>
+                <span className={`${styles.taskText} ${item.done ? styles.striked : ''}`}>
+                  {item.task}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

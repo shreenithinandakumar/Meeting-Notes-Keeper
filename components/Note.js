@@ -1,9 +1,8 @@
 import styles from '@/styles/Note.module.css'
 import { useState } from 'react';
-
-const Note = ({ title, date, time, tags, meetingNotes, actionItems }) => {
+import Link from 'next/link';
+const Note = ({ id, title, date, time, tags, meetingNotes, actionItems }) => {
     const [tasks, setTasks] = useState(actionItems);
-
     const toggleTask = (index) => {
         const updated = [...tasks];
         updated[index].done = !updated[index].done;
@@ -11,6 +10,7 @@ const Note = ({ title, date, time, tags, meetingNotes, actionItems }) => {
     };
     
     return (
+        <Link href={`/note/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <div className={styles.NotesContainer}>
 
         <div className={styles.NoteContainer}>
@@ -29,7 +29,7 @@ const Note = ({ title, date, time, tags, meetingNotes, actionItems }) => {
             <div className={styles.TodoContainer}>
                 <p className={styles.ActionItems}>Action Items ({actionItems.filter(item => !item.done).length} remaining) </p>
                 <div className={styles.TodoList}>
-                    {tasks.map((item, idx) => (
+                    {tasks.slice(0, 3).map((item, idx) => (
                         <div key={idx} className={styles.TaskRow} onClick={() => toggleTask(idx)}>
                             <span className={`${styles.Checkbox} ${item.done ? styles.Checked : ''}`}>
                             {item.done ? '✔' : ''}
@@ -39,11 +39,17 @@ const Note = ({ title, date, time, tags, meetingNotes, actionItems }) => {
                             </span>
                         </div>
                     ))}
+                    {tasks.length > 3 && (
+                        <div className={styles.MoreItemsText}>
+                            + {tasks.length - 3} more items...
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
 
         </div>
+        </Link>
     )
 }
 

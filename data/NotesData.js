@@ -5,11 +5,14 @@ const NotesData = [
     date: "2025-07-25",
     time: "10:00 AM",
     tags: ["project", "weekly"],
-    meetingNotes: " Discussed project updates and blockers. m",
+    meetingNotes: " Discussed project updates and blockers. Next.js is an open-source web development framework built on top of React, designed to facilitate the creation of performant and scalable web applications. It extends React's capabilities by providing features such as server-side rendering (SSR), static site generation (SSG), and API routes, which address common challenges in web development like SEO, initial page load performance, and full-stack development.",
     actionItems: [
       { task: "Design login page", done: false },
       { task: "Fix navbar bug", done: false },
-      {task: "Test product walkthrough", done: false }
+      {task: "Test product walkthrough", done: false },
+      { task: "Design login page", done: false },
+      { task: "Fix navbar bug", done: false },
+      {task: "Test product walkthrough", done: false },
     ]
   },
   {

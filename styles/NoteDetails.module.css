@@ -1,0 +1,169 @@
+.pageWrapper {
+  padding: 40px 200px;
+  /* background: linear-gradient(to right, #8347ff, #673ab7); */
+  min-height: 100vh;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.backButton {
+  background: transparent;
+  color: #673ab7;
+  font-weight: 600;
+  border: 1px solid rgb(221, 213, 213);
+  border-radius: 7px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: medium;
+  transition: opacity 0.2s ease;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.backButton:hover {
+  opacity: 0.8;
+}
+
+.actionButtons button {
+  background-color: white;
+  color: #673ab7;
+  border: 1px solid rgb(209, 208, 208);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-left: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.actionButtons .editButton {
+    padding: 12px 16px;
+    color: rgb(72, 69, 69);
+    font-size: medium;
+}
+
+.actionButtons .editButton:hover {
+  transform: scale(1.05);
+}
+
+.actionButtons .deleteButton {
+  background-color: #fa3b2e;
+  color: white;
+  font-size: medium;
+  padding: 12px 18px;
+}
+
+.actionButtons .deleteButton:hover {
+  transform: scale(1.05);
+}
+
+.noteCard {
+  background-color: #ffffff;
+  color: #333;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.date {
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.subheading {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4a148c;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.tagList {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chip,
+.tag {
+  background-color: #e8eaf6;
+  color: #4a148c;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 16px;
+  font-weight: 500;
+}
+
+.notesText {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+.todoList {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.taskRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: green;
+}
+
+.checked {
+  background-color: #d4ffd4;
+  border-color: green;
+}
+
+.taskText {
+  font-size: 16px;
+}
+
+.striked {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}

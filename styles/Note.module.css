@@ -113,3 +113,11 @@
   text-decoration: line-through;
   color: #888;
 }
+
+.MoreItemsText {
+  margin-top: 3px;
+  padding-left: 5px;
+  color: rgb(120, 118, 118);
+  font-size: 13;
+  font-style: italic;
+}

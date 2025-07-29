@@ -21,6 +21,7 @@ const NotesSection = ({filteredNotes}) => {
                 {displayNotes.map((note, index) => (
                     <Note
                         key={index}
+                        id={note.id}
                         title={note.title}
                         date={note.date}
                         time={note.time}

@@ -5,7 +5,7 @@ import ProfileDropDown from './ProfileDropDown';
 import FilterByTags from './FilterByTags';
 import { useState } from 'react';
 import SearchBar from './SearchBar';
-
+import Link from 'next/link';
 
 const Header = ({ searchQuery, setSearchQuery, setActiveTag, activeTag }) => {
 
@@ -21,9 +21,9 @@ const Header = ({ searchQuery, setSearchQuery, setActiveTag, activeTag }) => {
                     <div className={styles.Heading}>
                         <h1>Meeting Notes</h1>
                     </div>
-                    <div>
-                        <button className={styles.newNoteBtn}> + New Note </button>
-                    </div>
+                    <Link href={`/note/new`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <button className={styles.newNoteBtn} > + New Note </button>
+                    </Link>
                 </div>
 
                 <div className={styles.secondLine}>

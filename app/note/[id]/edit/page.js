@@ -12,11 +12,11 @@ export default function EditNote(paramsPromise) {
 
   const [title, setTitle] = useState('')
   const [date, setDate] = useState('')
-  const [participants, setParticipants] = useState([])
-  const [participantInput, setParticipantInput] = useState('')
   const [tags, setTags] = useState([])
   const [tagInput, setTagInput] = useState('')
   const [content, setContent] = useState('')
+  const [actionItems, setActionItems] = useState([])
+  const [newAction, setNewAction] = useState('')
 
   useEffect(() => {
     const found = NotesData.find(n => n.id.toString() === id)
@@ -24,22 +24,11 @@ export default function EditNote(paramsPromise) {
       setNote(found)
       setTitle(found.title)
       setDate(found.date)
-      setParticipants(found.participants || [])
       setTags(found.tags || [])
       setContent(found.meetingNotes || '')
+      setActionItems(found.actionItems || [])
     }
   }, [id])
-
-  const handleAddParticipant = () => {
-    if (participantInput.trim() !== '') {
-      setParticipants([...participants, participantInput.trim()])
-      setParticipantInput('')
-    }
-  }
-
-  const handleRemoveParticipant = (name) => {
-    setParticipants(participants.filter(p => p !== name))
-  }
 
   const handleAddTag = () => {
     if (tagInput.trim() !== '') {
@@ -58,9 +47,9 @@ export default function EditNote(paramsPromise) {
       id,
       title,
       date,
-      participants,
       tags,
       meetingNotes: content,
+      actionItems,
     })
     router.push(`/note/${id}`)
   }
@@ -70,15 +59,15 @@ export default function EditNote(paramsPromise) {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.headerRow}>
-        <button className={styles.backButton} onClick={() => router.push(`/note/${id}`)}>← Back to Note</button>
-        <button className={styles.deleteButton} onClick={handleSave}>💾 Save Changes</button>
+        <button className={styles.backButton} onClick={() => router.push(`/note/${id}`)}>↩  Back to Note</button>
+        <button className={styles.saveButton} onClick={handleSave}>💾  Save Changes</button>
       </div>
 
       <div className={styles.noteCard}>
         <h1 className={styles.title}>Edit Note</h1>
 
         <div className={styles.section}>
-          <label className={styles.subheading}>Title</label>
+          <h3 className={styles.subheading}>Title</h3>
           <input
             type="text"
             value={title}
@@ -88,7 +77,7 @@ export default function EditNote(paramsPromise) {
         </div>
 
         <div className={styles.section}>
-          <label className={styles.subheading}>Date</label>
+          <h3 className={styles.subheading}>Date</h3>
           <input
             type="date"
             value={date}
@@ -98,28 +87,7 @@ export default function EditNote(paramsPromise) {
         </div>
 
         <div className={styles.section}>
-          <label className={styles.subheading}>Participants</label>
-          <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-            <input
-              type="text"
-              placeholder="Add participant..."
-              value={participantInput}
-              onChange={(e) => setParticipantInput(e.target.value)}
-              className={styles.input}
-            />
-            <button className={styles.editButton} onClick={handleAddParticipant}>+</button>
-          </div>
-          <div className={styles.tagList}>
-            {participants.map((p, idx) => (
-              <span key={idx} className={styles.tag}>
-                {p} <span onClick={() => handleRemoveParticipant(p)} style={{ cursor: 'pointer', marginLeft: '6px' }}>×</span>
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.section}>
-          <label className={styles.subheading}>Tags</label>
+          <h3 className={styles.subheading}>Tags</h3>
           <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
             <input
               type="text"
@@ -128,7 +96,7 @@ export default function EditNote(paramsPromise) {
               onChange={(e) => setTagInput(e.target.value)}
               className={styles.input}
             />
-            <button className={styles.editButton} onClick={handleAddTag}>+</button>
+            <button className={styles.addButton} onClick={handleAddTag}>+</button>
           </div>
           <div className={styles.tagList}>
             {tags.map((tag, idx) => (
@@ -140,7 +108,7 @@ export default function EditNote(paramsPromise) {
         </div>
 
         <div className={styles.section}>
-          <label className={styles.subheading}>Content</label>
+          <h3 className={styles.subheading}>Content</h3>
           <textarea
             rows="8"
             className={styles.input}
@@ -148,6 +116,53 @@ export default function EditNote(paramsPromise) {
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
+
+        <div className={styles.section}>
+        <h3 className={styles.subheading}>🎯 Action Items</h3>
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+          <input
+            type="text"
+            placeholder="Add action item..."
+            value={newAction}
+            onChange={(e) => setNewAction(e.target.value)}
+            className={styles.input}
+          />
+          <button className={styles.addButton} onClick={() => {
+            if (newAction.trim() !== '') {
+              setActionItems([...actionItems, { task: newAction.trim(), done: false }])
+              setNewAction('')
+            }
+          }}>+</button>
+        </div>
+
+        <div className={styles.todoList}>
+          {actionItems.map((item, idx) => (
+            <div key={idx} className={styles.taskRow}>
+              <span
+                className={`${styles.checkbox} ${item.done ? styles.checked : ''}`}
+                onClick={() => {
+                  const updated = actionItems.map((it, i) =>
+                    i === idx ? { ...it, done: !it.done } : it
+                  )
+                  setActionItems(updated)
+                }}
+              >
+                {item.done ? '✔' : ''}
+              </span>
+              <span className={`${styles.taskText} ${item.done ? styles.striked : ''}`}>
+                {item.task}
+              </span>
+              <span
+                onClick={() => setActionItems(actionItems.filter((_, i) => i !== idx))}
+                style={{ marginLeft: 'auto', cursor: 'pointer', color: '#999' }}
+              >
+                ✕
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       </div>
     </div>
   )

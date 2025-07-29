@@ -11,6 +11,7 @@ export default function NoteDetails(paramsPromise) {
   const router = useRouter()
   const [note, setNote] = useState(null)
   const [tasks, setTasks] = useState([])
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const found = NotesData.find(n => n.id.toString() === id)
@@ -27,6 +28,12 @@ export default function NoteDetails(paramsPromise) {
     setTasks(updated)
   }
 
+  const handleDelete = () => {
+    alert ("Note deleted successfully")
+    setShowDeleteModal(false)
+    router.push('/')
+  }
+
   if (!note) return <div className={styles.loading}>Loading note...</div>
 
   return (
@@ -35,7 +42,7 @@ export default function NoteDetails(paramsPromise) {
         <button className={styles.backButton} onClick={() => router.push('/dashboard')}>↩  Back to Notes</button>
         <div className={styles.actionButtons}>
           <button className={styles.editButton} onClick={() => router.push(`/note/${id}/edit`)}>📝 Edit</button>
-          <button className={styles.deleteButton} onClick={() => router.push(`/note/${id}/delete`)}>🗑 Delete</button>
+          <button className={styles.deleteButton} onClick={() => setShowDeleteModal(true)}> 🗑  Delete </button>
         </div>
       </div>
 
@@ -73,6 +80,22 @@ export default function NoteDetails(paramsPromise) {
           </div>
         </div>
       </div>
+
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <p className={styles.modalHeading}>Are you sure?</p>
+            <p>
+              This action cannot be undone. This will permanently delete the note "{note.title}" and all its content.
+            </p>
+            <div className={styles.modalActions}>
+              <button className={styles.cancelBtn} onClick={() => setShowDeleteModal(false)}>Cancel</button>
+              <button className={styles.confirmBtn} onClick={handleDelete}>Delete Note</button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

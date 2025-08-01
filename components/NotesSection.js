@@ -1,7 +1,7 @@
 import styles from '@/styles/Note.module.css'
 import Note from './Note'
-import NotesData from '@/data/NotesData'
-// import NoNotesFound from './NoNotesFound';
+// import NotesData from '@/data/NotesData'
+import NoNotesFound from './NoNotesFound';
 
 const NotesSection = ({filteredNotes}) => {
 

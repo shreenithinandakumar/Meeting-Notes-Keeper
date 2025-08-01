@@ -36,4 +36,9 @@
     border: none;
     border-radius: 10px;
     color: white;
+    cursor: pointer;
+}
+
+.createButton:hover {
+    transform: scale(1.01);
 }

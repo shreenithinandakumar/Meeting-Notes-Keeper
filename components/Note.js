@@ -2,11 +2,13 @@ import styles from '@/styles/Note.module.css'
 import { useState } from 'react';
 import Link from 'next/link';
 const Note = ({ id, title, date, time, tags, meetingNotes, actionItems }) => {
-    const [tasks, setTasks] = useState(actionItems);
+    const [tasks, setTasks] = useState(actionItems || []);
     const toggleTask = (index) => {
-        const updated = [...tasks];
-        updated[index].done = !updated[index].done;
-        setTasks(updated);
+        setTasks(prev =>
+            prev.map((task, i) =>
+                i === index ? { ...task, status: !task.status } : task
+            )
+        );
     };
     
     return (
@@ -26,16 +28,17 @@ const Note = ({ id, title, date, time, tags, meetingNotes, actionItems }) => {
             <div>
                 <p className={styles.NotePara}> {meetingNotes.length > 200 ? meetingNotes.slice(0, 200) + '...' : meetingNotes} </p>
             </div>
+            {tasks?.length > 0 && (
             <div className={styles.TodoContainer}>
-                <p className={styles.ActionItems}>Action Items ({actionItems.filter(item => !item.done).length} remaining) </p>
+                <p className={styles.ActionItems}>Action Items ({tasks.filter(item => !item.status).length} remaining) </p>
                 <div className={styles.TodoList}>
                     {tasks.slice(0, 3).map((item, idx) => (
                         <div key={idx} className={styles.TaskRow} onClick={() => toggleTask(idx)}>
-                            <span className={`${styles.Checkbox} ${item.done ? styles.Checked : ''}`}>
-                            {item.done ? '✔' : ''}
+                            <span className={`${styles.Checkbox} ${item.status ? styles.Checked : ''}`}>
+                            {item.status ? '✔' : ''}
                             </span>
-                            <span className={`${styles.TaskText} ${item.done ? styles.Striked : ''}`}>
-                            {item.task}
+                            <span className={`${styles.TaskText} ${item.status ? styles.Striked : ''}`}>
+                            {item.taskName}
                             </span>
                         </div>
                     ))}
@@ -46,6 +49,7 @@ const Note = ({ id, title, date, time, tags, meetingNotes, actionItems }) => {
                     )}
                 </div>
             </div>
+            )}
         </div>
 
         </div>

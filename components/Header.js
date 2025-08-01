@@ -12,7 +12,6 @@ const Header = ({ searchQuery, setSearchQuery, setActiveTag, activeTag }) => {
     const [showMenu, setShowMenu] = useState(false);
     const toggleMenu = () => setShowMenu(!showMenu);
 
-
     return  (
         <div className={styles.Header} >
             <div></div>

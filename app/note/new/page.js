@@ -26,12 +26,12 @@ export default function AddNewNote() {
 
   const handleAddTask = () => {
     if (taskInput.trim() !== '') {
-      setActionItems([...actionItems, { task: taskInput.trim(), done: false }])
+      setActionItems([...actionItems, { taskName: taskInput.trim(), status: false }])
       setTaskInput('')
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const newErrors = {}
@@ -53,9 +53,28 @@ export default function AddNewNote() {
       actionItems,
     }
 
-    console.log('Note submitted:', newNote)
-    alert('Note added (demo only)')
-    router.push('/dashboard')
+    // console.log('Note submitted:', newNote)
+    // alert('Note added (demo only)')
+    // router.push('/dashboard')
+
+    try {
+    const res = await fetch('/api/notes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newNote),
+    });
+
+    if (res.ok) {
+      alert('Note added successfully!');
+      router.push('/dashboard');
+    } else {
+      const errorData = await res.json();
+      alert(`Failed to add note: ${errorData.error}`);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong!');
+  }
   }
 
   const handleCancel = ()=> {

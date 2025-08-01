@@ -3,12 +3,15 @@
 import styles from '@/styles/NoteDetails.module.css'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
-import NotesData from '@/data/NotesData'
+// import NotesData from '@/data/NotesData'
 
 export default function EditNote(paramsPromise) {
   const { id } = use(paramsPromise.params)
   const router = useRouter()
-  const [note, setNote] = useState(null)
+  // const [note, setNote] = useState(null)
+
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const [title, setTitle] = useState('')
   const [date, setDate] = useState('')
@@ -18,16 +21,37 @@ export default function EditNote(paramsPromise) {
   const [actionItems, setActionItems] = useState([])
   const [newAction, setNewAction] = useState('')
 
+  // useEffect(() => {
+  //   const found = NotesData.find(n => n.id.toString() === id)
+  //   if (found) {
+  //     setNote(found)
+  //     setTitle(found.title)
+  //     setDate(found.date)
+  //     setTags(found.tags || [])
+  //     setContent(found.meetingNotes || '')
+  //     setActionItems(found.actionItems || [])
+  //   }
+  // }, [id])
+
   useEffect(() => {
-    const found = NotesData.find(n => n.id.toString() === id)
-    if (found) {
-      setNote(found)
-      setTitle(found.title)
-      setDate(found.date)
-      setTags(found.tags || [])
-      setContent(found.meetingNotes || '')
-      setActionItems(found.actionItems || [])
+    const fetchNote = async () => {
+      try {
+        const res = await fetch(`/api/notes/${id}`)
+        if (!res.ok) throw new Error('Note not found')
+        const data = await res.json()
+        const note = data.data
+        setTitle(note.title)
+        setDate(note.date)
+        setTags(note.tags || [])
+        setContent(note.meetingNotes || '')
+        setActionItems(note.actionItems || [])
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
     }
+    fetchNote()
   }, [id])
 
   const handleAddTag = () => {
@@ -41,20 +65,47 @@ export default function EditNote(paramsPromise) {
     setTags(tags.filter(t => t !== tag))
   }
 
-  const handleSave = () => {
-    // TODO: Update in DB or local mock data
-    console.log('Save note with data:', {
-      id,
+  // const handleSave = () => {
+  //   // TODO: Update in DB or local mock data
+  //   console.log('Save note with data:', {
+  //     id,
+  //     title,
+  //     date,
+  //     tags,
+  //     meetingNotes: content,
+  //     actionItems,
+  //   })
+  //   router.push(`/note/${id}`)
+  // }
+
+  const handleSave = async () => {
+    const payload = {
       title,
       date,
       tags,
       meetingNotes: content,
       actionItems,
-    })
-    router.push(`/note/${id}`)
+    }
+
+    try {
+      const res = await fetch(`/api/notes/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+
+      if (!res.ok) throw new Error('Failed to update note')
+      alert('Note updated successfully')
+      router.push(`/note/${id}`)
+    } catch (err) {
+      alert(err.message)
+    }
   }
 
-  if (!note) return <div className={styles.loading}>Loading note...</div>
+  if (loading) return <div className={styles.loading}>Loading note...</div>
+  if (error) return <div className={styles.loading}>Error: {error}</div>
 
   return (
     <div className={styles.pageWrapper}>

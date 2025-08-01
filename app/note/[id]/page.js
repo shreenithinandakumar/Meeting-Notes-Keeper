@@ -4,7 +4,7 @@ import styles from '@/styles/NoteDetails.module.css'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { use } from 'react'
-import NotesData from '@/data/NotesData'
+// import NotesData from '@/data/NotesData'
 
 export default function NoteDetails(paramsPromise) {
   const { id } = use(paramsPromise.params)
@@ -12,13 +12,32 @@ export default function NoteDetails(paramsPromise) {
   const [note, setNote] = useState(null)
   const [tasks, setTasks] = useState([])
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  // useEffect(() => {
+  //   const found = NotesData.find(n => n.id.toString() === id)
+  //   if (found) {
+  //     setNote(found)
+  //     setTasks(found.actionItems || [])
+  //   }
+  // }, [id])
 
   useEffect(() => {
-    const found = NotesData.find(n => n.id.toString() === id)
-    if (found) {
-      setNote(found)
-      setTasks(found.actionItems || [])
+    const fetchNote = async () => {
+      try {
+        const res = await fetch(`/api/notes/${id}`)
+        if (!res.ok) throw new Error('Note not found')
+        const data = await res.json()
+        setNote(data.data)
+        setTasks(data.data.actionItems || [])
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
     }
+    fetchNote()
   }, [id])
 
   const toggleTask = (index) => {
@@ -28,14 +47,28 @@ export default function NoteDetails(paramsPromise) {
     setTasks(updated)
   }
 
-  const handleDelete = () => {
-    alert ("Note deleted successfully")
-    setShowDeleteModal(false)
-    router.push('/')
+  // const handleDelete = () => {
+  //   alert ("Note deleted successfully")
+  //   setShowDeleteModal(false)
+  //   router.push('/')
+  // }
+
+  const handleDelete = async () => {
+    try {
+      await fetch(`/api/notes/${id}`, { method: 'DELETE' })
+      alert('Note deleted successfully')
+      router.push('/')
+    } catch (err) {
+      alert('Failed to delete')
+    }
   }
 
-  if (!note) return <div className={styles.loading}>Loading note...</div>
+  // if (!note) return <div className={styles.loading}>Loading note...</div>
 
+  if (loading) return <div className={styles.loading}>Loading note...</div>
+  if (error) return <div className={styles.loading}>Error: {error}</div>
+  if (!note) return null
+  
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.headerRow}>

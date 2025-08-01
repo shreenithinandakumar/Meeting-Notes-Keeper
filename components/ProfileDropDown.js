@@ -9,11 +9,11 @@ const ProfileDropdown = () => {
 
   return (
     <div className={styles.profileContainer}>
-      <Image>
+      <Image
         src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg"
         alt="Profile"
         className={styles.profileimg}
-        onClick={toggleDropdown}
+        onClick={toggleDropdown}>
       </Image>
       {open && (
         <div className={styles.dropdownMenu}>

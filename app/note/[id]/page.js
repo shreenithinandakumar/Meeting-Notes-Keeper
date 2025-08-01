@@ -119,7 +119,7 @@ export default function NoteDetails(paramsPromise) {
           <div className={styles.modal}>
             <p className={styles.modalHeading}>Are you sure?</p>
             <p>
-              This action cannot be undone. This will permanently delete the note "{note.title}" and all its content.
+              This action cannot be undone. This will permanently delete the note {note.title} and all its content.
             </p>
             <div className={styles.modalActions}>
               <button className={styles.cancelBtn} onClick={() => setShowDeleteModal(false)}>Cancel</button>

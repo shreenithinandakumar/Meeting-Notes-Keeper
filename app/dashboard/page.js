@@ -21,7 +21,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            router.push("/login"); // You can redirect to a custom login page if needed
+            router.push("/login"); 
         }
     }, [status, router]);
 

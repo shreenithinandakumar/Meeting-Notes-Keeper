@@ -9,7 +9,8 @@ const NoteSchema = new mongoose.Schema({
   actionItems: [{
     taskName: String,
     status: Boolean
-  }]
+  }],
+  userId: { type: String, required: true },
 }, { timestamps: true })
 
 export default mongoose.models.Note || mongoose.model("Note", NoteSchema)

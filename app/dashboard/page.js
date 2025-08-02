@@ -8,26 +8,39 @@ import NoNotesFound from "@/components/NoNotesFound"
 import { useState, useEffect } from "react"
 import Loader from "@/components/Loader"
 
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
 const Dashboard = () => {
+    const { data: session, status } = useSession();
+    const router = useRouter();
     const [notes, setNotes] = useState([])
     const [loading, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState('');
     const [activeTag, setActiveTag] = useState(null);
 
     useEffect(() => {
-        const fetchNotes = async () => {
-        try {
-            const res = await fetch('/api/notes')
-            const data = await res.json()
-            setNotes(data.notes)
-        } catch (err) {
-            console.error('Failed to fetch notes', err)
-        } finally {
-            setLoading(false)
+        if (status === "unauthenticated") {
+            router.push("/login"); // You can redirect to a custom login page if needed
         }
+    }, [status, router]);
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            const fetchNotes = async () => {
+            try {
+                const res = await fetch('/api/notes')
+                const data = await res.json()
+                setNotes(data.notes)
+            } catch (err) {
+                console.error('Failed to fetch notes', err)
+            } finally {
+                setLoading(false)
+            }
+            }
+            fetchNotes()
         }
-        fetchNotes()
-    }, [])
+    }, [status])
 
     const query = searchQuery.trim().toLowerCase();
 
@@ -47,7 +60,7 @@ const Dashboard = () => {
 
     const showStats = notes.length > 0 && filteredNotes.length > 0;
 
-    if (loading) return <Loader />
+    if (status === "loading" || loading) return <Loader />
 
     return (
         <div>

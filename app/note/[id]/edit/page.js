@@ -4,6 +4,7 @@ import styles from '@/styles/NoteDetails.module.css'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
 // import NotesData from '@/data/NotesData'
+import Loader from '@/components/Loader'
 
 export default function EditNote(paramsPromise) {
   const { id } = use(paramsPromise.params)
@@ -39,7 +40,7 @@ export default function EditNote(paramsPromise) {
         const res = await fetch(`/api/notes/${id}`)
         if (!res.ok) throw new Error('Note not found')
         const data = await res.json()
-        const note = data.data
+        const note = data
         setTitle(note.title)
         setDate(note.date)
         setTags(note.tags || [])
@@ -104,7 +105,7 @@ export default function EditNote(paramsPromise) {
     }
   }
 
-  if (loading) return <div className={styles.loading}>Loading note...</div>
+  if (loading) return <Loader />
   if (error) return <div className={styles.loading}>Error: {error}</div>
 
   return (
@@ -180,7 +181,7 @@ export default function EditNote(paramsPromise) {
           />
           <button className={styles.addButton} onClick={() => {
             if (newAction.trim() !== '') {
-              setActionItems([...actionItems, { task: newAction.trim(), done: false }])
+              setActionItems([...actionItems, { taskName: newAction.trim(), status: false }])
               setNewAction('')
             }
           }}>+</button>
@@ -190,18 +191,18 @@ export default function EditNote(paramsPromise) {
           {actionItems.map((item, idx) => (
             <div key={idx} className={styles.taskRow}>
               <span
-                className={`${styles.checkbox} ${item.done ? styles.checked : ''}`}
+                className={`${styles.checkbox} ${item.status ? styles.checked : ''}`}
                 onClick={() => {
                   const updated = actionItems.map((it, i) =>
-                    i === idx ? { ...it, done: !it.done } : it
+                    i === idx ? { ...it, status: !it.status } : it
                   )
                   setActionItems(updated)
                 }}
               >
-                {item.done ? '✔' : ''}
+                {item.status ? '✔' : ''}
               </span>
-              <span className={`${styles.taskText} ${item.done ? styles.striked : ''}`}>
-                {item.task}
+              <span className={`${styles.taskText} ${item.status ? styles.striked : ''}`}>
+                {item.taskName}
               </span>
               <span
                 onClick={() => setActionItems(actionItems.filter((_, i) => i !== idx))}

@@ -4,7 +4,7 @@ import Note from '@/models/Note'
 export async function GET(_, { params }) {
   try {
     await connectDB()
-    const note = await Note.findById(params._id)
+    const note = await Note.findById(params.id)
     return Response.json(note)
   } catch (err) {
         return Response.json({
@@ -18,7 +18,7 @@ export async function PUT(req, { params }) {
   try{
     await connectDB()
     const body = await req.json()
-    const updated = await Note.findByIdAndUpdate(params._id, body, { new: true })
+    const updated = await Note.findByIdAndUpdate(params.id, body, { new: true })
     return Response.json(updated)
   } catch (err) {
         return Response.json({
@@ -31,7 +31,7 @@ export async function PUT(req, { params }) {
 export async function DELETE(_, { params }) {
   try {
     await connectDB()
-    await Note.findByIdAndDelete(params._id)
+    await Note.findByIdAndDelete(params.id)
     return Response.json({ message: "Deleted" })
   } catch (err) {
         return Response.json({

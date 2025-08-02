@@ -158,11 +158,12 @@ export default function AddNewNote() {
           </div>
           <div className={styles.todoList}>
             {actionItems.map((item, idx) => (
-              <div key={idx} className={styles.taskRow}>
-                <span className={`${styles.checkbox} ${item.done ? styles.checked : ''}`}>{item.done ? '✔' : ''}</span>
-                <span className={`${styles.taskText} ${item.done ? styles.striked : ''}`}>{item.task}</span>
-              </div>
-            ))}
+            <div key={idx} className={styles.taskRow}>
+              <span className={`${styles.checkbox} ${item.status ? styles.checked : ''}`}>{item.status ? '✔' : ''}</span>
+              <span className={`${styles.taskText} ${item.status ? styles.striked : ''}`}>{item.taskName}</span>
+            </div>
+          ))}
+
           </div>
         </div>
 

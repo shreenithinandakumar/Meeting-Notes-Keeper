@@ -6,6 +6,7 @@ import NotesSection from "@/components/NotesSection"
 import NotesEmpty from "@/components/NotesEmpty"
 import NoNotesFound from "@/components/NoNotesFound"
 import { useState, useEffect } from "react"
+import Loader from "@/components/Loader"
 
 const Dashboard = () => {
     const [notes, setNotes] = useState([])
@@ -46,12 +47,19 @@ const Dashboard = () => {
 
     const showStats = notes.length > 0 && filteredNotes.length > 0;
 
-    if (loading) return <p className="text-center mt-10">Loading Notes...</p>
+    if (loading) return <Loader />
 
     return (
         <div>
-            <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} setActiveTag={setActiveTag} activeTag={activeTag} ></Header>
-            {showStats && <Statistics></Statistics>}
+            <Header 
+                searchQuery={searchQuery} 
+                setSearchQuery={setSearchQuery} 
+                setActiveTag={setActiveTag} 
+                activeTag={activeTag} 
+                notes={notes}
+            >
+            </Header>
+            {showStats && <Statistics notes={notes}></Statistics>}
             {notes.length === 0 ? (
                 <NotesEmpty />
             ) : filteredNotes.length === 0 ? (

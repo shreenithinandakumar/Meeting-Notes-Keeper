@@ -7,7 +7,7 @@ import { useState } from 'react';
 import SearchBar from './SearchBar';
 import Link from 'next/link';
 
-const Header = ({ searchQuery, setSearchQuery, setActiveTag, activeTag }) => {
+const Header = ({ searchQuery, setSearchQuery, setActiveTag, activeTag, notes }) => {
 
     const [showMenu, setShowMenu] = useState(false);
     const toggleMenu = () => setShowMenu(!showMenu);
@@ -27,7 +27,7 @@ const Header = ({ searchQuery, setSearchQuery, setActiveTag, activeTag }) => {
 
                 <div className={styles.secondLine}>
                     <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} disabled={!!activeTag} ></SearchBar>
-                    <FilterByTags setActiveTag={setActiveTag} activeTag={activeTag} ></FilterByTags>
+                    <FilterByTags setActiveTag={setActiveTag} activeTag={activeTag} notes={notes} ></FilterByTags>
                 </div>
             </div>
             <div> <ProfileDropDown> </ProfileDropDown></div>

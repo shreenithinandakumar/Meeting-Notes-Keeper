@@ -11,8 +11,11 @@ const Note = ({ id, title, date, time, tags, meetingNotes, actionItems }) => {
         );
     };
     
+    console.log("Initial actionItems:", actionItems);
+    console.log("State tasks:", tasks);
+
     return (
-        <Link href={`/note/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link href={`/note/${id}/`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <div className={styles.NotesContainer}>
 
         <div className={styles.NoteContainer}>

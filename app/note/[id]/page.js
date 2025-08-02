@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { use } from 'react'
 // import NotesData from '@/data/NotesData'
+import Loader from '@/components/Loader'
 
 export default function NoteDetails(paramsPromise) {
   const { id } = use(paramsPromise.params)
@@ -29,8 +30,8 @@ export default function NoteDetails(paramsPromise) {
         const res = await fetch(`/api/notes/${id}`)
         if (!res.ok) throw new Error('Note not found')
         const data = await res.json()
-        setNote(data.data)
-        setTasks(data.data.actionItems || [])
+        setNote(data)
+        setTasks(data.actionItems || [])
       } catch (err) {
         setError(err.message)
       } finally {
@@ -42,7 +43,7 @@ export default function NoteDetails(paramsPromise) {
 
   const toggleTask = (index) => {
     const updated = tasks.map((task, i) =>
-      i === index ? { ...task, done: !task.done } : task
+      i === index ? { ...task, status: !task.status } : task
     )
     setTasks(updated)
   }
@@ -65,7 +66,7 @@ export default function NoteDetails(paramsPromise) {
 
   // if (!note) return <div className={styles.loading}>Loading note...</div>
 
-  if (loading) return <div className={styles.loading}>Loading note...</div>
+  if (loading) return <Loader />
   if (error) return <div className={styles.loading}>Error: {error}</div>
   if (!note) return null
   
@@ -98,15 +99,15 @@ export default function NoteDetails(paramsPromise) {
         </div>
 
         <div className={styles.section}>
-          <h3 className={styles.subheading}>🎯 Action Items ({tasks.filter(item => !item.done).length} remaining)</h3>
+          <h3 className={styles.subheading}>🎯 Action Items ({tasks.filter(item => !item.status).length} remaining)</h3>
           <div className={styles.todoList}>
             {tasks.map((item, idx) => (
               <div key={idx} className={styles.taskRow} onClick={() => toggleTask(idx)}>
-                <span className={`${styles.checkbox} ${item.done ? styles.checked : ''}`}>
-                  {item.done ? '✔' : ''}
+                <span className={`${styles.checkbox} ${item.status ? styles.checked : ''}`}>
+                  {item.status ? '✔' : ''}
                 </span>
-                <span className={`${styles.taskText} ${item.done ? styles.striked : ''}`}>
-                  {item.task}
+                <span className={`${styles.taskText} ${item.status ? styles.striked : ''}`}>
+                  {item.taskName}
                 </span>
               </div>
             ))}

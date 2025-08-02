@@ -1,9 +1,9 @@
 import styles from '@/styles/FilterByTags.module.css'
-import NotesData from '@/data/NotesData';
+// import NotesData from '@/data/NotesData';
 
-const FilterByTags = ({ setActiveTag, activeTag }) => {
-    const allTags = NotesData.flatMap(note => note.tags || []);
-    const uniqueTags = [...new Set(allTags)].reverse();
+const FilterByTags = ({ setActiveTag, activeTag, notes }) => {
+    const allTags = notes.flatMap(note => note.tags || []).map(tag => tag.trim().toLowerCase());
+    const uniqueTags = [...new Set(allTags)].sort();
 
     const handleClick = (tag) => {
         setActiveTag(tag === activeTag ? null : tag) 

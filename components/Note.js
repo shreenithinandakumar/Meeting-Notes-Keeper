@@ -29,7 +29,7 @@ const Note = ({ id, title, date, time, tags, meetingNotes, actionItems }) => {
                 </div>
             )}
             <div>
-                <p className={styles.NotePara}> {meetingNotes.length > 200 ? meetingNotes.slice(0, 200) + '...' : meetingNotes} </p>
+                <p className={styles.NotePara}> {meetingNotes.length > 100 ? meetingNotes.slice(0, 100) + '...' : meetingNotes} </p>
             </div>
             {tasks?.length > 0 && (
             <div className={styles.TodoContainer}>

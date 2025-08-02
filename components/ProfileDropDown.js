@@ -1,3 +1,5 @@
+'use client'
+import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 import styles from '@/styles/ProfileDropdown.module.css';
 import Image from 'next/image';
@@ -19,8 +21,7 @@ const ProfileDropdown = () => {
       </Image>
       {open && (
         <div className={styles.dropdownMenu}>
-          <p>My Profile</p>
-          <p>Logout</p>
+          <p onClick={() => signOut()}>Logout</p>
         </div>
       )}
     </div>
